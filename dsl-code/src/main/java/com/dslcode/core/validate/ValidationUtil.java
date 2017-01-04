@@ -58,6 +58,8 @@ public class ValidationUtil<T> {
     public static final String FLOAT_NUM_REG = "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*$";
     /** 非零开头的最多带两位小数的数字 正则 */
     public static final String FLOAT_NUM_2_POINT_REG = "^([1-9][0-9]*)+(.[0-9]{1,2})?$";
+    /** 金额 正则 */
+    public static final String MONEY_REG = "^\\d+(\\.\\d+)?$";
     /** 大于0的整数 正则 */
     public static final String GT0_NUM_REG = "^[1-9]\\d*$";
     /** 至少11位的数字 正则 */
