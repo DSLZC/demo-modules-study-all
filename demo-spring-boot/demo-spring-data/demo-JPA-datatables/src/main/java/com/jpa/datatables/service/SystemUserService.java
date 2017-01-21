@@ -1,6 +1,9 @@
 package com.jpa.datatables.service;
 
+
 import com.jpa.datatables.entity.SystemUser;
+import com.jpa.datatables.general.datatables.DataTablesInputExtend;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 
 import java.util.List;
 
@@ -10,4 +13,5 @@ import java.util.List;
 public interface SystemUserService{
     List<SystemUser> findAll();
 
+    DataTablesOutput datatableList(DataTablesInputExtend inputExtend);
 }

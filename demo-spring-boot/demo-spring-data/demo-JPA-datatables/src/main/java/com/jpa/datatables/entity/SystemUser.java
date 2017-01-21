@@ -30,6 +30,9 @@ public class SystemUser implements Serializable{
 
     @Column(name = "dept_id")
     private Integer deptId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dept_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private SystemDept dept;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "system_user_role", joinColumns = @JoinColumn(name = "system_user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))

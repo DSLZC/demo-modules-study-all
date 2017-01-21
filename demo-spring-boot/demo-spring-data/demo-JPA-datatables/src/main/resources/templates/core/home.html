@@ -1,0 +1,172 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="Bookmark" href="/favicon.ico" />
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <!-- Standard iPhone -->
+    <link rel="apple-touch-icon" sizes="57x57" href="http://static.h-ui.net/www/images/touch-icon-iphone-114.png" />
+    <!-- Retina iPhone -->
+    <link rel="apple-touch-icon" sizes="114x114" href="http://static.h-ui.net/www/images/touch-icon-iphone-114.png" />
+    <!-- Standard iPad -->
+    <link rel="apple-touch-icon" sizes="72x72" href="http://static.h-ui.net/www/images/touch-icon-ipad-144.png" />
+    <!-- Retina iPad -->
+    <link rel="apple-touch-icon" sizes="144x144" href="http://static.h-ui.net/www/images/touch-icon-ipad-144.png" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="http://lib.h-ui.net/html5.js"></script>
+    <script type="text/javascript" src="http://lib.h-ui.net/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="http://static.h-ui.net/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="http://static.h-ui.net/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="http://static.h-ui.net/www/css/H-ui.doc.css" />
+    <link rel="stylesheet" type="text/css" href="http://lib.h-ui.net/Hui-iconfont/1.0.8/iconfont.min.css" />
+    <!--[if lt IE 9]>
+    <link href="http://static.h-ui.net/h-ui/css/H-ui.ie.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <script type="text/javascript" src="http://lib.h-ui.net/jquery/1.9.1/jquery.min.js"></script>
+    <!--[if IE 6]>
+    <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('.pngfix,.iconpic,.list-icon');</script>
+    <![endif]-->
+    <!-- 反运营商劫持 S -->
+    <style type="text/css">
+        html {
+            display:none;
+        }
+    </style>
+    <script>
+        if( self == top ) {
+            document.documentElement.style.display = 'block' ;
+        } else {
+            top.location = self.location ;
+        }
+    </script>
+    <!-- 反运营商劫持 E -->
+    <title>对话框modal 弹出层popover - 组件 - H-ui前端框架官方网站</title>
+    <meta name="keywords" content="modal,popover,对话框,弹出层,H-ui前端框架"/>
+    <meta name="description" content="H-ui前端框架对话框modal，弹出层popover。"/>
+    <style type="text/css">
+        #Hui-nav li#Huinav_2 a, #Hui-nav li#Huinav_2 a:hover {
+            color: #fff;
+            background-color: #111
+        }
+    </style>
+</head>
+<body onLoad="prettyPrint()">
+<header class="navbar-wrapper">
+    <div class="navbar navbar-black">
+        <div class="container-fluid cl"> <a class="logo navbar-logo hidden-xs" href="/aboutHui.shtml">H-ui前端框架</a> <a class="logo navbar-logo-m visible-xs" href="/aboutHui.shtml">H-ui</a> <span class="logo navbar-slogan hidden-xs">简单 &middot; 免费 &middot; 适合中国网站</span> <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
+            <nav id="Hui-nav" class="nav navbar-nav">
+                <ul class="cl">
+                    <li id="Huinav_1"> <a href="/index.shtml">首页</a> </li>
+                    <li id="Huinav_2"> <a href="/Hui-overview.shtml">核心</a> </li>
+                    <li id="Huinav_3"> <a href="/lib/jquery.cookie.js.shtml">脚本</a> </li>
+                    <li id="Huinav_4"> <a href="/ext/list.shtml">扩展</a> </li>
+                    <li id="Huinav_5"> <a href="/cases/index.shtml">案例</a> </li>
+                </ul>
+            </nav>
+            <nav class="navbar-userbar f-r hidden-xs hidden-sm"> <a href="javascript:void(0);" onclick="addFavoritepage();return !1;" class="btn btn-primary radius" title="收藏">收藏本页</a> <a class="btn btn-success radius" target="_blank" href="/shareCode.shtml">代码分享</a> <a class="btn btn-success radius juanzeng" target="_blank" href="juanzeng.shtml">捐赠<span style="color:#333" class="bk-gray box-shadow text-c f-14 pb-10 bg-fff"><img width="200" src="http://static.h-ui.net/www/images/alipay.png"/> <br/>
+				支付宝扫码</span></a> </nav>
+        </div>
+    </div>
+</header>
+<aside class="Hui-aside">
+    <div class="menu_dropdown bk_2">
+        <ul>
+            <li><a href="Hui-notes-menu.shtml">&nbsp;&nbsp;&nbsp;&nbsp;结构目录</a></li>
+        </ul>
+        <dl id="menu_notes">
+            <dt>&nbsp;&nbsp;&nbsp;&nbsp;注释<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a href="Hui-notes-htmlStructure.shtml">Html书写规范</a></li>
+                    <li><a href="Hui-notes-css.shtml">CSS写作注意事项</a></li>
+                    <li><a href="Hui-notes-cnFont.shtml">中文字体css编码转换</a></li>
+                    <li><a href="Hui-notes-cssHack.shtml">CSS Hack</a></li>
+                    <li><a href="Hui-notes-keycode.shtml">键盘按钮keycode</a></li>
+                    <li><a href="Hui-notes-ARIA.shtml">ARIA属性值</a></li>
+                    <li><a href="Hui-notes-cssHame.shtml">css 命名规范</a></li>
+                    <li><a href="Hui-notes-htmlName.shtml">html命名规范</a></li>
+                    <li><a href="Hui-notes-fileName.shtml">文件夹命名规范</a></li>
+                    <li><a href="Hui-notes-regular.shtml">常用正则表达式</a></li>
+                    <li><a href="Hui-notes-csscursor.shtml">css中cursor(光标类型)</a></li>
+                </ul>
+            </dd>
+        </dl>
+
+        <dl id="menu_5">
+            <dt>&nbsp;&nbsp;&nbsp;&nbsp;页面<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a href="404.shtml" target="_blank">5.1 404页面</a></li>
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                </ul>
+            </dd>
+        </dl>
+    </div>
+</aside>
+
+<div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+        <a class="maincolor" href="/">首页</a>
+        <span class="c-999 en">&gt;</span>
+        组件
+        <span class="c-999 en">&gt;</span>
+        <span class="c-666">对话框 弹出层</span>
+    </nav>
+    <div class="Hui-article">
+
+    </div>
+</section>
+
+<!--普通弹出层-->
+<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 id="myModalLabel">对话框标题</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+            </div>
+            <div class="modal-body">
+                <p>对话框内容…</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="http://lib.h-ui.net/prettify.js"></script>
+<script type="text/javascript" src="http://static.h-ui.net/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="http://static.h-ui.net/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="http://static.h-ui.net/www/js/common.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#menu_4 dt").addClass("selected");
+        $("#menu_4 dd").show();
+        $(".Hui-aside").scrollTop(320);
+    });
+    /*获取滚动条高度*/
+    $(document).scroll(
+            function(){
+                var sTop=$(document).scrollTop();
+                $("#scrollTop1").val(sTop);
+            }
+    );
+
+    function modaldemo(){
+        $("#modal-demo").modal("show");
+    }
+    function modalalertdemo(){
+        $.Huimodalalert('我是消息框，2秒后我自动滚蛋！',2000);
+    }
+</script>
+</body>
+</html>

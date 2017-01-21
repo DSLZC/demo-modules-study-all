@@ -20,7 +20,7 @@ public class SystemRole{
     @GeneratedValue
     private Integer id;
 
-    @Column(name = "name")
+    @Transient
     private String name;
 
     @Column(name = "enabled")
@@ -30,20 +30,25 @@ public class SystemRole{
     @Enumerated
     private Role role;
 
+    public String getName() {
+        return role.alias;
+    }
     public enum Role{
         /** 预留 */
-        reserved,
-        /** 预留超级管理员 */
-        super_manager,
+        reserved("预留"),
+        /** 超级管理员 */
+        super_manager("超级管理员"),
         /** 管理员 */
-        manager,
+        manager("管理员"),
         /** 系统用户 */
-        system_user,
+        system_user("系统用户"),
         /** 普通用户 */
-        user,
+        user("普通用户"),
         /** 访客 */
-        visitor;
+        visitor("访客");
 
+        private String alias;
+        Role(String alias){ this.alias = alias;}
         /** fastJson ordinal,默认为name */
         @JsonValue
         final String value() {

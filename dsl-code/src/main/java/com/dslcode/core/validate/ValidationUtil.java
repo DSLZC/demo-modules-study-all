@@ -59,7 +59,7 @@ public class ValidationUtil<T> {
     /** 非零开头的最多带两位小数的数字 正则 */
     public static final String FLOAT_NUM_2_POINT_REG = "^([1-9][0-9]*)+(.[0-9]{1,2})?$";
     /** 金额 正则 */
-    public static final String MONEY_REG = "^\\d+(\\.\\d+)?$";
+    public static final String MONEY_REG = "(^[1-9]\\d*(\\.\\d{1,2})?$)|(^0\\.0[1-9]$)|(^0\\.[1-9][0-9]$)";
     /** 大于0的整数 正则 */
     public static final String GT0_NUM_REG = "^[1-9]\\d*$";
     /** 至少11位的数字 正则 */

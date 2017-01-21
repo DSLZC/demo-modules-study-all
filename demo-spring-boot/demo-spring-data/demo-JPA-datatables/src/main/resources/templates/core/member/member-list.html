@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link type="text/css" th:substituteby="common/csslibs :: csses" />
+	<title>用户管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户中心 <span class="c-gray en">&gt;</span> 用户管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		<form id="member_search_form" onsubmit="return false;">
+			<div class="text-c"> 日期范围：
+				<input type="text" class="input-text Wdate" readonly="readonly" autocomplete="off" name="startTime" id="startTime" style="width:120px;"
+					   onfocus="WdatePicker({maxDate: '#F{$dp.$D(\'endTime\')}',minDate:'%y-%M-%d',dateFmt:'yyyy-MM-dd HH:mm:ss'})" />~
+				<input type="text" class="input-text Wdate" readonly="readonly" autocomplete="off" id="endTime" name="endTime"
+					   onfocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')||\'%y-%M-%d\'}',dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+				<button type="submit" class="btn btn-success radius" onclick="dataTableExtend.reload()"><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
+			</div>
+		</form>
+	</div>
+
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		<span class="l">
+			<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+			<a href="javascript:;" onclick="layer_show('添加用户','/page/member/member-add', window.outerWidth*0.5, window.outerHeight*0.7)" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a>
+		</span>
+	</div>
+	<div class="mt-20">
+		<table id="member_list" class="table table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+				<tr class="text-c">
+					<th width="25">序号</th>
+					<th width="100">用户名</th>
+					<th width="100">密码</th>
+					<th width="90">姓名</th>
+					<th width="150">所属部门</th>
+					<th width="200">角色</th>
+					<th width="100">操作</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	</div>
+</div>
+<script type="text/javascript" th:substituteby="common/jslibs :: jses"></script>
+<script type="text/javascript" src="/extend/datatables/extend.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+	$(function () {
+		var tableId = "member_list";
+		var	ajaxUrl = "/user/datatable";
+		var	searchFormId = "member_search_form";
+		var	columns = [
+					{data: 'id', orderable: false, searchable: false, render: function (){
+						return  dataTableExtend.rowIndex++;
+					}},
+					{data: 'username', orderable: false},
+					{data: 'password', orderable: false, searchable: false},
+					{data: 'name', orderable: false},
+					{data: 'dept.name', orderable: false},
+					{data: 'roles', orderable: false, searchable: false, render: function (data) {
+						var html = "";
+						if(data.length > 0){
+							data.forEach(function (o) {
+								html += o.name+"、";
+							});
+							html = html.substring(0, html.length-1);
+						}
+						return html;
+					}},
+					{data: 'id', orderable: false, searchable: false, render: function(data) {
+						return '<input type="button" value="编辑" class="btn btn-secondary radius size-S" onclick="layer_show(\'用户编辑\', \'edit/'+data+'\', window.outerWidth*0.85, window.outerHeight*0.75);"/>'
+								+'<input type="button" value="删除" class="btn btn-danger radius size-S ml-10" onclick="remove_user('+data+')"/>';
+					}}
+				];
+		dataTableExtend.init(tableId, columns, ajaxUrl, searchFormId);
+		$('.table-sort tbody').on('click', 'tr', function () {
+			$(this).toggleClass('selected');
+		});
+	});
+
+	/*用户-删除*/
+	function remove_user(id){
+		layer.confirm('确认要删除吗？',function(index){
+			console.info("userId", id);
+			layer.msg('已停用!',{icon: 5,time:1000});
+		});
+	}
+//]]>
+</script>
+</body>
+</html>

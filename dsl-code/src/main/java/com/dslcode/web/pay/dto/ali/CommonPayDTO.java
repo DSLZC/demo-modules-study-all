@@ -48,6 +48,8 @@ public class CommonPayDTO {
     public enum AliPayMethod{
         /** 支付 */
         pay("alipay.trade.pay"),
+        /** WAP支付 */
+        pay_wap("alipay.trade.wap.pay"),
         /** 支付结果查询 */
         pay_query("alipay.trade.query"),
         /** 退款 */
