@@ -7,23 +7,28 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户中心 <span class="c-gray en">&gt;</span> 用户管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-	<div class="cl pd-5 bg-1 bk-gray mt-20">
-		<form id="member_search_form" onsubmit="return false;">
-			<div class="text-c"> 日期范围：
-				<input type="text" class="input-text Wdate" readonly="readonly" autocomplete="off" name="startTime" id="startTime" style="width:120px;"
-					   onfocus="WdatePicker({maxDate: '#F{$dp.$D(\'endTime\')}',minDate:'%y-%M-%d',dateFmt:'yyyy-MM-dd HH:mm:ss'})" />~
-				<input type="text" class="input-text Wdate" readonly="readonly" autocomplete="off" id="endTime" name="endTime"
-					   onfocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')||\'%y-%M-%d\'}',dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
-				<button type="submit" class="btn btn-success radius" onclick="dataTableExtend.reload()"><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
-			</div>
-		</form>
-	</div>
-
-	<div class="cl pd-5 bg-1 bk-gray mt-20">
+	<div class="cl pd-5 bg-1 bk-gray">
 		<span class="l">
-			<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+			<a href="javascript:;" id="batch_delete" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
 			<a href="javascript:;" onclick="layer_show('添加用户','/page/member/member-add', window.outerWidth*0.5, window.outerHeight*0.7)" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a>
 		</span>
+		<form id="member_search_form" onsubmit="return false;" class="text-c r">
+			<span>日期范围：</span>
+			<input type="text" class="input-text radius Wdate" readonly="readonly" autocomplete="off" name="startTime" id="startTime" style="width:165px;"
+				   onfocus="WdatePicker({maxDate: '#F{$dp.$D(\'endTime\')}', minDate: '%y-%M-%d', dateFmt: 'yyyy-MM-dd HH:mm:ss'})" /> -
+			<input type="text" class="input-text radius Wdate" readonly="readonly" autocomplete="off" id="endTime" name="endTime" style="width:165px;"
+				   onfocus="WdatePicker({minDate: '#F{$dp.$D(\'startTime\')||\'%y-%M-%d\'}', dateFmt: 'yyyy-MM-dd HH:mm:ss'})" />
+			<input type="text" class="input-text radius" style="width:120px" placeholder="用户姓名、部门" name="username"/>
+			<select class="select input-text size-M radius" name="roleId" style="width:90px;font-size: 12px">
+				<option value="-1">全部</option>
+				<option value="1">超级管理员</option>
+				<option value="2">管理员</option>
+				<option value="3">普通用户</option>
+				<option value="4">访客</option>
+			</select>
+			<button type="submit" class="btn btn-success radius" onclick="dataTableExtend.reload()"><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
+			<button class="btn btn-primary radius" onclick="$(this).parent()[0].reset();$(this).prev().click();"><i class="Hui-iconfont">&#xe665;</i> 重置</button>
+		</form>
 	</div>
 	<div class="mt-20">
 		<table id="member_list" class="table table-border table-bordered table-hover table-bg table-sort">
@@ -86,6 +91,16 @@
 			layer.msg('已停用!',{icon: 5,time:1000});
 		});
 	}
+
+	// 批量删除
+	$("#batch_delete").click(function () {
+		console.info("批量删除..............");
+	}).hover(function(){
+		tipIndex = layer.tips('批量删除选中的用户', this, {tips: [1, '#393D49'], time: 0});
+	},function(){
+		layer.close(tipIndex);
+	});
+	var tipIndex;
 //]]>
 </script>
 </body>
