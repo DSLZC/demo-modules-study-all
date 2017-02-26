@@ -11,6 +11,7 @@ import java.util.Date;
 public class DateUtil {
     public static final String TIMEZONE = "GMT+8";
     public static final String yyyyMMddHHmmssSSS = "yyyyMMddHHmmssSSS";
+    public static final String yyMMddHHmmssSSS = "yyMMddHHmmssSSS";
     public static final String MMddHHmmssSSS = "MMddHHmmssSSS";
     public static final String yyyyMMddHHmmss0 = "yyyyMMddHHmmss";
     public static final String yyyyMMddHHmmss = "yyyy-MM-dd HH:mm:ss";

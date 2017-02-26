@@ -53,7 +53,7 @@ public class FileUtil {
 	 * @return
 	 */
 	public static String getRandomFileName(String pathOrName) throws Exception{
-		return StringUtil.append2String(DateUtil.nowStr(DateUtil.MMddHHmmssSSS), RandomCode.getNumCode(2), suffix(pathOrName, true));
+		return StringUtil.append2String(DateUtil.nowStr(DateUtil.yyMMddHHmmssSSS), RandomCode.getNumCode(2), suffix(pathOrName, true));
 	}
 
 	/**
