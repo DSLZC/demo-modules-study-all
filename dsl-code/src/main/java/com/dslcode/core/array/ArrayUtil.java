@@ -54,4 +54,23 @@ public class ArrayUtil<T> {
     public static String join(Object[] objects, String split){
         return StringUtil.join(objects, split);
     }
+
+    /**
+     * 判断是否为空
+     * @param param
+     * @return
+     */
+    public static<T> boolean isNull(T... param) {
+        return null == param || param.length == 0;
+    }
+
+    /**
+     * 判断是否不为空
+     * @param param
+     * @return
+     */
+    public static<T> boolean isNotNull(T... param) {
+        return !isNull(param);
+    }
+
 }

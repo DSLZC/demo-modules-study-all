@@ -25,9 +25,6 @@ public class NullUtil {
 		} else if (param instanceof Map) {	// Map
 			Map obj = (Map) param;
 			return obj.isEmpty();
-		} else if (param.getClass().isArray()) {	// 数组
-			Object[] obj = (Object[]) param;
-			return obj.length == 0;
 		}
 		return false;
 	}
