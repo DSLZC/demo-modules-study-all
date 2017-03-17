@@ -7,6 +7,7 @@
 
 	<name>file-server</name>
 	<description>我的文件服务器t</description>
+	<packaging>jar</packaging>
 
 	<parent>
 		<groupId>modules-study</groupId>
