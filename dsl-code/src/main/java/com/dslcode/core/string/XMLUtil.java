@@ -44,6 +44,7 @@ public class XMLUtil {
      * @throws IOException
      */
     public static Map xmlParse2Map(String xml) throws Exception {
+        if(NullUtil.isNull(xml)) return new HashMap();
         Element root = getRootElement(xml);
         if(null == root) return null;
         return xmlChild2Map(root.elements());

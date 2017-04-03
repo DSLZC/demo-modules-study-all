@@ -56,7 +56,7 @@ public class TestController {
     @PostMapping("serializer/put")
     public void serializerPut(){
         try {
-            serializerRedisTemplate.set("serializer2", new WXMemberInfo());
+            serializerRedisTemplate.set("serializer3", new WXMemberInfo());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,7 +65,7 @@ public class TestController {
     @GetMapping("serializer/get")
     public Object serializerGet(){
         try {
-            return serializerRedisTemplate.get("serializer2");
+            return serializerRedisTemplate.get("serializer3");
         } catch (Exception e) {
             e.printStackTrace();
             return null;

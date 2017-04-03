@@ -25,6 +25,10 @@ public class PayConfig {
     @Value("${pay.weChat.appid}")
     private String weChatAppid;
 
+    /** 用户微信的openid，当trade_type为JSAPI的时候，该属性字段必须设置  */
+    @Value("${pay.weChat.openid}")
+    private String weChatOpenid;
+
     /** API密钥 */
     @Value("${pay.weChat.apiKey}")
     private String apiKey;

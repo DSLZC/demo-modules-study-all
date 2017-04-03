@@ -42,12 +42,13 @@ public class UnityPlaceOrderDTO extends BasePayDTO {
     private String product_id = "111111111";
 
     /** 用户标识: trade_type=JSAPI，此参数必传，用户在商户appid下的唯一标识。 */
-    private String openid = "111111";
+    private String openid = "";
 
 
     public UnityPlaceOrderDTO() {}
     public UnityPlaceOrderDTO(BasePayDTO basePay, PayConfig config, PayEnum.PayType payType) {
         this.setAppid(config.getWeChatAppid());
+        this.setOpenid(config.getWeChatOpenid());
         this.setMch_id(config.getWeChatMchId());
         this.setApiKey(config.getApiKey());
         this.setNotify_url(config.getWeChatNotifyUrl());
@@ -92,8 +93,8 @@ public class UnityPlaceOrderDTO extends BasePayDTO {
                 "&mch_id=", placeOrderDTO.getMch_id(),
                 "&nonce_str=", placeOrderDTO.getNonce_str(),
                 "&notify_url=", placeOrderDTO.getNotify_url(),
-                "&out_trade_no=", placeOrderDTO.getOut_trade_no(),
                 payType == PayEnum.PayType.weChat_gzh? "&openid="+placeOrderDTO.getOpenid() : "",
+                "&out_trade_no=", placeOrderDTO.getOut_trade_no(),
                 payType == PayEnum.PayType.weChat_scan? "&product_id="+placeOrderDTO.getProduct_id() : "",
                 "&spbill_create_ip=", placeOrderDTO.getSpbill_create_ip(),
                 "&total_fee=", placeOrderDTO.getTotal_fee(),

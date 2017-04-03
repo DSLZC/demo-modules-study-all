@@ -51,7 +51,7 @@ public class WeChatPay implements PayMethod{
             Map<String, Object> unifyPlaceOrderReturnMap = XMLUtil.xmlParse2Map(unifyPlaceOrderReturnXml);
             // 封装 调起微信APP支付参数
             if(EqualsUtil.equalsAllIgnoreCase("SUCCESS", String.valueOf(unifyPlaceOrderReturnMap.get("return_code")), String.valueOf(unifyPlaceOrderReturnMap.get("result_code")))){
-                if(payType == PayEnum.PayType.weChat_app){
+                if(payType == PayEnum.PayType.weChat_app || payType == PayEnum.PayType.weChat_gzh){
                     // 返回PayAppDTO给APP
                     return new PayAppDTO(
                             placeOrderDTO.getAppid(),
@@ -151,8 +151,8 @@ public class WeChatPay implements PayMethod{
                 "<mch_id>", placeOrderDTO.getMch_id(), "</mch_id>",
                 "<nonce_str>", placeOrderDTO.getNonce_str(), "</nonce_str>",
                 "<notify_url>", placeOrderDTO.getNotify_url(), "</notify_url>",
-                "<out_trade_no>", placeOrderDTO.getOut_trade_no(), "</out_trade_no>",
                 payType == PayEnum.PayType.weChat_gzh? "<openid>"+placeOrderDTO.getOpenid()+"</openid>" : "",
+                "<out_trade_no>", placeOrderDTO.getOut_trade_no(), "</out_trade_no>",
                 payType == PayEnum.PayType.weChat_scan ?"<product_id>"+placeOrderDTO.getProduct_id()+"</product_id>" : "",
                 "<spbill_create_ip>", placeOrderDTO.getSpbill_create_ip(), "</spbill_create_ip>",
                 "<total_fee>", placeOrderDTO.getTotal_fee(), "</total_fee>",
