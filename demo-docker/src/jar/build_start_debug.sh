@@ -26,8 +26,8 @@ docker build -t ${app_images_name} .
 
 #start
 docker run -d --name ${app_container_name} \
- -v ${app_logs_dir}:/logs \
- -v ${app_upload_dir}:/upload \
+ -v ${app_logs_dir}/:/logs/:rw \
+ -v ${app_upload_dir}/:/upload/:rw \
  -e "SPRING_PROFILES_ACTIVE=${profile_name}" \
  -p ${server_port}:${server_port} \
  -t ${app_images_name}

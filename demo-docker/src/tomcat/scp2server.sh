@@ -1,0 +1,1 @@
+scp *.war root@xx.xx.xx.xx:/data/workspace/tomcat/webapps/ROOT.war
