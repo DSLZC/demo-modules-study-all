@@ -13,6 +13,8 @@ import java.io.File;
 
 /**
  * Created by dongsilin on 2017/2/23.
+ * 文件服务器操作主类
+ * 详细操作见 user-guide.doc
  */
 @Slf4j
 @RestController
