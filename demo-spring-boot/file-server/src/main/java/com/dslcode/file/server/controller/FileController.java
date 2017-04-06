@@ -68,11 +68,11 @@ public class FileController {
      * @param response
      */
     @GetMapping("get/{appName}/{moduleName}/{typeName}/{fileName:.+}")
-    public void get( @PathVariable(value = "appName") String appName,
-                     @PathVariable String moduleName,
-                     @PathVariable String typeName,
-                     @PathVariable String fileName,
-                     HttpServletResponse response){
+    public void get(@PathVariable(value = "appName") String appName,
+                    @PathVariable(name = "moduleName") String moduleName,
+                    @PathVariable(name = "typeName") String typeName,
+                    @PathVariable(name = "fileName") String fileName,
+                    HttpServletResponse response){
         String filePath= StringUtil.append2String(rootDirectory, File.separator, appName, File.separator, moduleName, File.separator, typeName, File.separator, fileName);
         try {
             FileUtil.download(filePath, fileName, typeName, response);
@@ -91,10 +91,10 @@ public class FileController {
      * @param fileName 文件名
      */
     @DeleteMapping("delete/{appName}/{moduleName}/{typeName}/{fileName:.+}")
-    public void delete( @PathVariable(value = "appName") String appName,
-                        @PathVariable String moduleName,
-                        @PathVariable String typeName,
-                        @PathVariable String fileName){
+    public void delete(@PathVariable(value = "appName") String appName,
+                       @PathVariable(name = "moduleName") String moduleName,
+                       @PathVariable(name = "typeName") String typeName,
+                       @PathVariable(name = "fileName") String fileName){
         String filePath= StringUtil.append2String(rootDirectory, File.separator, appName, File.separator, moduleName, File.separator, typeName, File.separator, fileName);
         new File(filePath).delete();
     }
