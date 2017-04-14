@@ -1,6 +1,6 @@
 package com.dslcode.core.property;
 
-import com.dslcode.core.error.ErrorParser;
+import com.dslcode.core.exception.ExceptionParser;
 import com.dslcode.core.reflect.ReflectUtil_MDL;
 import com.dslcode.core.string.StringUtil;
 import org.apache.commons.logging.Log;
@@ -182,7 +182,7 @@ public class PropertyUtil<T> {
 				}
 			}
 		} catch (Exception e) {
-			log.error(StringUtil.append(targetClass.getClass().getName(),ErrorParser.getInfo(e)),e);
+			log.error(StringUtil.append(targetClass.getClass().getName(), ExceptionParser.getInfo(e)),e);
 		}
 		return target;
 	}
@@ -250,10 +250,10 @@ public class PropertyUtil<T> {
 					propDescriptor.getWriteMethod().invoke(target,value);
 				}
 			} catch (Exception e) {
-				log.error(StringUtil.append(target.getClass().getName(),":",propDescriptor.getName(),ErrorParser.getInfo(e)),e);
+				log.error(StringUtil.append(target.getClass().getName(),":", propDescriptor.getName(), ExceptionParser.getInfo(e)), e);
 			}
 		} catch (Exception e) {
-			log.error(StringUtil.append(target.getClass().getName(),ErrorParser.getInfo(e)),e);
+			log.error(StringUtil.append(target.getClass().getName(), ExceptionParser.getInfo(e)), e);
 		}
 	}
 
@@ -276,7 +276,7 @@ public class PropertyUtil<T> {
 	 * @param targetClass
 	 * @return
 	 */
-	public static<T> Collection<T> dozerListMapper(List sources, Class<T> targetClass){
+	public static<T> List<T> dozerListMapper(List sources, Class<T> targetClass){
 		List<T> results = new ArrayList<T>(sources.size());
 		sources.forEach(s -> results.add(dozerMapper(s, targetClass)));
 		return results;

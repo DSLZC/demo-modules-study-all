@@ -15,6 +15,8 @@ public class NumberUtil {
 	public static final Map<String, DecimalFormat> formatCache = new ConcurrentHashMap<String, DecimalFormat>();
 	/** 默认format 2位小数  */
 	public static final String DEFAULT = "#.##";
+	/** 取整  */
+	public static final String INTEGER = "#";
 
 	/**
 	 * 获取format对象
