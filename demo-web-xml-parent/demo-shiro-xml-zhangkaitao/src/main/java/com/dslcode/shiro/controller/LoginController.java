@@ -4,7 +4,6 @@ import com.dslcode.web.response.WebResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,7 +46,6 @@ public class LoginController {
         // 当前用户
         Subject currentUser = SecurityUtils.getSubject();
 
-        Session session = currentUser.getSession();
         // 判断是否认证(登录)
         if(!currentUser.isAuthenticated()){
             // 封装UsernamePasswordToken对象
@@ -63,9 +61,6 @@ public class LoginController {
             }  catch (UnknownAccountException uae) {
                 return WebResponse.buildErrorMsg("用户名不存在");
             } catch (IncorrectCredentialsException ice) {
-                Object pwdErrorNum = session.getAttribute("pwdErrorNum");
-                if(null != pwdErrorNum) session.setAttribute("pwdErrorNum", ((Integer) pwdErrorNum)+1);
-                else session.setAttribute("pwdErrorNum", 1);
                 return WebResponse.buildErrorMsg("密码错误");
             } catch (ExcessiveAttemptsException lae) {
                 return WebResponse.buildErrorMsg("密码错误次数过多，用户被锁定，请十分钟后重试");

@@ -8,6 +8,7 @@ import com.dslcode.shiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class IndexController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/")
+    @GetMapping(value = {"/", "/index"})
     public String index(@CurrentUser User loginUser, Model model) {
         Set<String> permissions = userService.findPermissions(loginUser.getUsername());
         List<Resource> menus = resourceService.findMenus(permissions);

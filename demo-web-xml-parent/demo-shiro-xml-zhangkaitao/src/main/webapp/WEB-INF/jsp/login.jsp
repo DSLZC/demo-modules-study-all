@@ -39,15 +39,16 @@
               <div class="formControls col-xs-8 col-xs-offset-3">
                 <input class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
                 <img src="/images/VerifyCode.aspx.png"> <a id="kanbuq" href="javascript:;">看不清，换一张</a> </div>
-            </div>
+            </div>-->
 
             <div class="row cl">
               <div class="formControls col-xs-8 col-xs-offset-3">
-                <label for="online">
-                  <input type="checkbox" name="online" id="online" value=""/>使我保持登录状态</label>
+                  <label for="online">
+                    <input type="checkbox" name="rememberMe" id="online" value="1"/>&nbsp;记住我的登录状态
+                  </label>
               </div>
             </div>
-            -->
+
             <div class="row cl">
                 <div class="formControls col-xs-8 col-xs-offset-3">
                     <input type="submit" class="btn btn-success radius size-L" id="submit_btn" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;"/>

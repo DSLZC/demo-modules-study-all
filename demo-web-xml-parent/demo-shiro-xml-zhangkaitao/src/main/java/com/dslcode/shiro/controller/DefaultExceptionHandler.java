@@ -28,4 +28,17 @@ public class DefaultExceptionHandler {
         mv.setViewName("unauthorized");
         return mv;
     }
+
+    /**
+     * 系统错误
+     */
+    @ExceptionHandler({Exception.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ModelAndView processServerException(Exception e) {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("exception", e);
+        mv.setViewName("error");
+        return mv;
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.dslcode.shiro.config.shiro.credentials;
+package com.dslcode.shiro.config.shiro;
 
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -25,22 +25,19 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
         String username = (String)token.getPrincipal();
-        //retry count + 1
+
         AtomicInteger retryCount = passwordRetryCache.get(username);
-        if(retryCount == null) {
+        if(null== retryCount) {
             retryCount = new AtomicInteger(0);
             passwordRetryCache.put(username, retryCount);
         }
-        if(retryCount.incrementAndGet() > 5) {
-            //if retry count > 5 throw
-            throw new ExcessiveAttemptsException();
-        }
+        // 密码错误次数过多
+        if(retryCount.incrementAndGet() > 5) throw new ExcessiveAttemptsException();
 
         boolean matches = super.doCredentialsMatch(token, info);
-        if(matches) {
-            //clear retry count
-            passwordRetryCache.remove(username);
-        }
+        // 匹配成功则移除密码错误次数缓存
+        if(matches) passwordRetryCache.remove(username);
         return matches;
     }
+
 }

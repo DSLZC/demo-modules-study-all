@@ -3,7 +3,8 @@ package com.dslcode.shiro.controller;
 import com.dslcode.shiro.entity.Role;
 import com.dslcode.shiro.service.ResourceService;
 import com.dslcode.shiro.service.RoleService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,14 +28,13 @@ public class RoleController {
     @Autowired
     private ResourceService resourceService;
 
-    @RequiresPermissions("role:view")
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("roleList", roleService.findAll());
         return "role/list";
     }
 
-    @RequiresPermissions("role:create")
+    @RequiresRoles(value = {"admin", "manager"}, logical = Logical.OR)
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String showCreateForm(Model model) {
         setCommonData(model);
@@ -43,7 +43,7 @@ public class RoleController {
         return "role/edit";
     }
 
-    @RequiresPermissions("role:create")
+    @RequiresRoles(value = {"admin", "manager"}, logical = Logical.OR)
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(Role role, RedirectAttributes redirectAttributes) {
         roleService.createRole(role);
@@ -51,7 +51,7 @@ public class RoleController {
         return "redirect:/role";
     }
 
-    @RequiresPermissions("role:update")
+    @RequiresRoles(value = {"admin"})
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         setCommonData(model);
@@ -60,7 +60,7 @@ public class RoleController {
         return "role/edit";
     }
 
-    @RequiresPermissions("role:update")
+    @RequiresRoles(value = {"admin"})
     @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
     public String update(Role role, RedirectAttributes redirectAttributes) {
         roleService.updateRole(role);
@@ -68,7 +68,7 @@ public class RoleController {
         return "redirect:/role";
     }
 
-    @RequiresPermissions("role:delete")
+    @RequiresRoles(value = {"admin"})
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
     public String showDeleteForm(@PathVariable("id") Long id, Model model) {
         setCommonData(model);
@@ -77,7 +77,7 @@ public class RoleController {
         return "role/edit";
     }
 
-    @RequiresPermissions("role:delete")
+    @RequiresRoles(value = {"admin"})
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         roleService.deleteRole(id);
