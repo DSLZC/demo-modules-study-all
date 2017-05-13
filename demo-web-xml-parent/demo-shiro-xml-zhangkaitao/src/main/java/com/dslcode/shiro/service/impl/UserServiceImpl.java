@@ -1,5 +1,6 @@
 package com.dslcode.shiro.service.impl;
 
+import com.dslcode.shiro.config.shiro.realm.UserRealm;
 import com.dslcode.shiro.dao.UserDao;
 import com.dslcode.shiro.entity.User;
 import com.dslcode.shiro.service.PasswordHelper;
@@ -18,7 +19,6 @@ import java.util.Set;
  * <p>Version: 1.0
  */
 @Service
-
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -27,6 +27,8 @@ public class UserServiceImpl implements UserService {
     private PasswordHelper passwordHelper;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private UserRealm userRealm;
 
     /**
      * 创建用户
@@ -58,6 +60,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(newPassword);
         passwordHelper.encryptPassword(user);
         userDao.updateUser(user);
+        this.userRealm.clearUserCache(user.getUsername());
     }
 
     @Override

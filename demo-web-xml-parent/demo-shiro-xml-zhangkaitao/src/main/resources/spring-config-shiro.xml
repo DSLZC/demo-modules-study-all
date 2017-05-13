@@ -21,11 +21,11 @@
                 <property name="storedCredentialsHexEncoded" value="true"/>
             </bean>
         </property>
-        <property name="cachingEnabled" value="false"/>
-        <!--<property name="authenticationCachingEnabled" value="true"/>-->
-        <!--<property name="authenticationCacheName" value="authenticationCache"/>-->
-        <!--<property name="authorizationCachingEnabled" value="true"/>-->
-        <!--<property name="authorizationCacheName" value="authorizationCache"/>-->
+        <property name="cachingEnabled" value="true"/>
+        <property name="authenticationCachingEnabled" value="true"/>
+        <property name="authenticationCacheName" value="authenticationCache"/>
+        <property name="authorizationCachingEnabled" value="true"/>
+        <property name="authorizationCacheName" value="authorizationCache"/>
     </bean>
 
     <!-- 会话管理器 -->
@@ -83,6 +83,7 @@
             <value>
                 /static/** = anon
                 /login = anon
+                /captcha/** = anon
                 /logout = logout
                 / = user
                 /index = user

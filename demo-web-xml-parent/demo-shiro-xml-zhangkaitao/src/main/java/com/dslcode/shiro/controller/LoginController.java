@@ -1,5 +1,6 @@
 package com.dslcode.shiro.controller;
 
+import com.dslcode.shiro.config.jcaptcha.ManageJCaptchaService;
 import com.dslcode.web.response.WebResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>User: Zhang Kaitao
@@ -42,7 +45,15 @@ public class LoginController {
 
     @PostMapping("/login")
     @ResponseBody
-    public WebResponse login(String username, String password, @RequestParam(name = "rememberMe", defaultValue = "0") int rememberMe) {
+    public WebResponse login(HttpServletRequest request, String username, String password, @RequestParam(name = "rememberMe", defaultValue = "0") int rememberMe) {
+
+        //图片验证码
+        try {
+            ManageJCaptchaService.validate(request);
+        } catch (Exception e) {
+            return WebResponse.buildErrorMsg("图片验证码错误");
+        }
+
         // 当前用户
         Subject currentUser = SecurityUtils.getSubject();
 

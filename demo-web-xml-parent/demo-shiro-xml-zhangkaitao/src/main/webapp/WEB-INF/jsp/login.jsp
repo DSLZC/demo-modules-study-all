@@ -34,12 +34,12 @@
                            datatype="*3-18" nullmsg="请输入密码！" errormsg="密码3-18个字符！" />
                 </div>
             </div>
-            <!--
+
             <div class="row cl">
               <div class="formControls col-xs-8 col-xs-offset-3">
-                <input class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
-                <img src="/images/VerifyCode.aspx.png"> <a id="kanbuq" href="javascript:;">看不清，换一张</a> </div>
-            </div>-->
+                <input class="input-text size-L" type="text" placeholder="验证码" name="captchaCode" style="width:100px;">
+                <img src="/captcha/generate" id="jcaptcha_img" onclick="get_captcha_img();"> <a id="kanbuq" href="javascript:get_captcha_img();">换一张</a> </div>
+            </div>
 
             <div class="row cl">
               <div class="formControls col-xs-8 col-xs-offset-3">
@@ -84,12 +84,15 @@
                         location.href = data.body;
                     });
                 } else {
-                    layer.msg(data.message, {time: 35000});
+                    get_captcha_img();
+                    layer.msg(data.message, {time: 3000});
                 }
             }
         });
-    })
-
+    });
+    function get_captcha_img() {
+        document.getElementById('jcaptcha_img').src = '/captcha/generate?t='+ new Date().getTime();
+    }
 </script>
 </body>
 </html>
