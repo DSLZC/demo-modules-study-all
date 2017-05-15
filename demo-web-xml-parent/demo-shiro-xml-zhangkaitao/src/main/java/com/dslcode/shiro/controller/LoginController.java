@@ -7,6 +7,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,7 +40,10 @@ public class LoginController {
 //    }
 
     @GetMapping("login")
-    public String login(){
+    public String login(Model model, @RequestParam(name = "kickout", defaultValue = "0") int kickout){
+        //是否被踢出登录
+        model.addAttribute("kickout", kickout == 1);
+
         return "login";
     }
 

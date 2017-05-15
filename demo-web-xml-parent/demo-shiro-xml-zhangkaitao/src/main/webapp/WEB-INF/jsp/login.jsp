@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <meta charset="utf-8" />
@@ -19,6 +21,9 @@
 <div class="header"></div>
 <div class="loginWraper">
     <div id="loginform" class="loginBox">
+        <c:if test="${kickout}">
+            <p style="color: red;margin: -20px 160px;position: absolute;">您已在其他地方登录，本次登录被踢出。</p>
+        </c:if>
         <form class="form form-horizontal" action="login" method="post" id="shiro_login_form">
             <div class="row cl">
                 <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <!-- 缓存管理器 -->
     <bean id="cacheManager" class="com.dslcode.shiro.spring.SpringCacheManagerWrapper">
@@ -73,21 +73,33 @@
         </property>
     </bean>
 
+    <bean id="kickoutSessionHandlerFilter" class="com.dslcode.shiro.config.shiro.KickoutSessionHandlerFilter">
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="sessionManager" ref="sessionManager"/>
+        <property name="kickoutTheFormer" value="true"/>
+        <property name="maxLoginNum" value="1"/>
+        <property name="kickoutToUrl" value="/login?kickout=1"/>
+    </bean>
     <!-- Shiro的Web过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/login"/>
         <property name="successUrl" value="/"/>
         <property name="unauthorizedUrl" value="/jsp/unauthorized.jsp"/>
+        <property name="filters">
+            <util:map>
+                <entry key="kickout" value-ref="kickoutSessionHandlerFilter"/>
+            </util:map>
+        </property>
         <property name="filterChainDefinitions">
             <value>
                 /static/** = anon
                 /login = anon
                 /captcha/** = anon
                 /logout = logout
-                / = user
+                / = user,kickout
                 /index = user
-                /welcome = user
+                /welcome = user,kickout
                 /** = authc
             </value>
         </property>
