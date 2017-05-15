@@ -20,6 +20,7 @@ import java.util.LinkedList;
  * <p>User: Zhang Kaitao
  * <p>Date: 14-2-18
  * <p>Version: 1.0
+ * 同一账户同时在线人数控制Filter
  */
 public class KickoutSessionHandlerFilter extends AccessControlFilter {
 
@@ -52,7 +53,7 @@ public class KickoutSessionHandlerFilter extends AccessControlFilter {
         //TODO 同步控制
         Deque<Serializable> deque = cache.get(username);
         if(null == deque) {
-            deque = new LinkedList<Serializable>();
+            deque = new LinkedList<>();
             cache.put(username, deque);
         }
 
@@ -64,30 +65,22 @@ public class KickoutSessionHandlerFilter extends AccessControlFilter {
         //如果队列里的sessionId数超出最大会话数，开始踢人
         while(deque.size() > maxLoginNum) {
             Serializable kickoutSessionId = null;
-            if(kickoutTheFormer) { //如果踢出前者
-                kickoutSessionId = deque.removeLast();
-            } else { //否则踢出后者
-                kickoutSessionId = deque.removeFirst();
-            }
+
+            if(kickoutTheFormer) kickoutSessionId = deque.removeLast(); // 踢出前者
+            else kickoutSessionId = deque.removeFirst(); // 踢出后者
+
             try {
                 Session kickoutSession = sessionManager.getSession(new DefaultSessionKey(kickoutSessionId));
-                if(kickoutSession != null) {
-                    //设置会话的kickout属性表示踢出了
-                    kickoutSession.setAttribute("kickout", true);
-                }
-            } catch (Exception e) {//ignore exception
-            }
+                //设置会话的kickout属性表示踢出了
+                if(kickoutSession != null) kickoutSession.setAttribute("kickout", true);
+            } catch (Exception e) {}
         }
 
         //如果被踢出了，直接退出，重定向到踢出后的地址
-        if (session.getAttribute("kickout") != null) {
-            //会话被踢出了
-            try {
-                subject.logout();
-            } catch (Exception e) { //ignore
-            }
+        if (null != session.getAttribute("kickout")) {
+            subject.logout();//会话被踢出了
             saveRequest(request);
-            WebUtils.issueRedirect(request, response, kickoutToUrl);
+            WebUtils.issueRedirect(request, response, kickoutToUrl);// 重定向踢出地址
             return false;
         }
 

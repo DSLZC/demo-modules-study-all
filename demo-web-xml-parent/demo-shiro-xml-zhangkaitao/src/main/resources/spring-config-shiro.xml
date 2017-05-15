@@ -88,6 +88,7 @@
         <property name="unauthorizedUrl" value="/jsp/unauthorized.jsp"/>
         <property name="filters">
             <util:map>
+                <!-- 同一账户同时在线人数控制Filter -->
                 <entry key="kickout" value-ref="kickoutSessionHandlerFilter"/>
             </util:map>
         </property>
@@ -98,9 +99,9 @@
                 /captcha/** = anon
                 /logout = logout
                 / = user,kickout
-                /index = user
+                /index = user,kickout
                 /welcome = user,kickout
-                /** = authc
+                /** = authc,kickout
             </value>
         </property>
     </bean>

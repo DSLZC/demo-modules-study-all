@@ -97,6 +97,7 @@
     });
     function get_captcha_img() {
         document.getElementById('jcaptcha_img').src = '/captcha/generate?t='+ new Date().getTime();
+        document.getElementsByName('captchaCode')[0].value = '';
     }
 </script>
 </body>
