@@ -18,7 +18,7 @@
     under the License.
 
 --%>
-<%@ page import="java.util.Iterator, java.util.Map, java.util.Set" %>
+<%@ page import="java.util.Iterator, java.util.Map" %>
 <%
     Map parameters = (Map)request.getAttribute("parameters");
     Iterator iterator = parameters.keySet().iterator();
