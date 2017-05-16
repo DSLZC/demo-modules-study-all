@@ -10,6 +10,7 @@ import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -71,6 +72,22 @@ public class UserRealm extends AuthorizingRealm {
 
     public void clearAllCachedAuthenticationInfo() {
         getAuthenticationCache().clear();
+    }
+
+    /**
+     * 清空用户关联权限
+     * @param username
+     */
+    public void clearCachedAuthorizationInfo(String username){
+        clearCachedAuthorizationInfo(new SimplePrincipalCollection(username, getName()));
+    }
+
+    /**
+     * 清空用户认证信息
+     * @param username
+     */
+    public void clearCachedAuthenticationInfo(String username){
+        clearCachedAuthenticationInfo(new SimplePrincipalCollection(username, getName()));
     }
 
     public void clearAllCache() {
