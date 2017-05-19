@@ -12,6 +12,7 @@
         <module>demo-shiro-xml</module>
         <module>demo-shiro-xml-zhangkaitao</module>
         <module>demo-web-cas-client1</module>
+        <module>demo-web-cas-client2</module>
     </modules>
     <name>demo-web-xml-parent</name>
     <url>http://maven.apache.org</url>
