@@ -118,7 +118,7 @@
           p:sql="select password from t_user where account=? and status = 'active'" />-->
         <bean id="primaryAuthenticationHandler" class="com.cas.server.AuthenticationDefinedHandler"
               p:dataSource-ref="dataSource"
-              p:sql="select password from t_user where account=? and status = 'active'"
+              p:sql="select password from sys_user where username=?"
               p:encryptType="md5" p:salt="true" p:encryptTimes="2" />
 
     <!-- 设置数据源 -->
@@ -131,7 +131,7 @@
 
     <!-- c3p0连接池配置 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/db_test?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;useSSL=false"/>
+        <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/shiro_test?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;useSSL=false"/>
         <property name="user" value="root"/>
         <property name="password" value="123456"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>

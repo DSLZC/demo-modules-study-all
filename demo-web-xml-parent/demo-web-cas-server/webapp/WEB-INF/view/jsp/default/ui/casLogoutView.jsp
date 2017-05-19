@@ -1,27 +1,12 @@
-<%--
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 
-    Licensed to Jasig under one or more contributor license
-    agreements. See the NOTICE file distributed with this work
-    for additional information regarding copyright ownership.
-    Jasig licenses this file to you under the Apache License,
-    Version 2.0 (the "License"); you may not use this file
-    except in compliance with the License.  You may obtain a
-    copy of the License at the following location:
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
-
---%>
 <jsp:directive.include file="includes/top.jsp" />
   <div id="msg" class="success">
-    <h2><spring:message code="screen.logout.header" /></h2>
-    <p><spring:message code="screen.logout.success" /></p>
-    <p><spring:message code="screen.logout.security" /></p>
+    <h2>
+      注销成功
+      <input class="btn-submit" value="登录页面" type="button" onclick="location.href='login'" style="margin-left: 30px"/>
+    </h2>
+    <p>您已经成功退出CAS系统，谢谢使用！</p>
+    <p>出于安全考虑，请关闭您的浏览器。</p>
   </div>
 <jsp:directive.include file="includes/bottom.jsp" />
