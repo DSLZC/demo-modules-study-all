@@ -87,4 +87,13 @@ public class DateUtil {
         return dateStrMillis(dateStr, format) / 1000;
     }
 
+    /**
+     * 日期格式化
+     * @param date 日期
+     * @param format 格式
+     * @return
+     */
+    public static String parse(Date date, String format) {
+        return mils2TimeStr(date.getTime(), format);
+    }
 }

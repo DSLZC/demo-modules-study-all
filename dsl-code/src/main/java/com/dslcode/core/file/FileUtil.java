@@ -16,7 +16,7 @@ import java.io.*;
  * @author 董思林
  * @date 2016-07-14
  */
-public class FileUtil {
+public final class FileUtil {
 
 	/** 文件路径分隔符 */
 	public static final char PATH_SEPARATOR = File.separatorChar;

@@ -99,6 +99,14 @@
 			<scope>provided</scope>
 			<optional>true</optional>
 		</dependency>
+		<!-- Office 文档EXCEL，WORD，PPT -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.14</version>
+			<optional>true</optional>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
