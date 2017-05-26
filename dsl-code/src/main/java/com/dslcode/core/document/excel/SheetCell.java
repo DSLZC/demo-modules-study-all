@@ -20,6 +20,10 @@ public final class SheetCell {
         this.value = value;
     }
 
+    public SheetCell(Object value) {
+        this.value = value;
+    }
+
     public String getName() {
         return name;
     }

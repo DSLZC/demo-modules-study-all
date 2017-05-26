@@ -17,6 +17,8 @@ import java.util.List;
 public final class ExcelCreateUtil {
 
     private static final SheetCell headIndexCell = new SheetCell("index", "序号");
+    private static final int defaultHeadHeigth = 20;
+    private static final int defaultBodyHeigth = 18;
 
     /**
      * 根据数据创建excel工作簿
@@ -48,6 +50,20 @@ public final class ExcelCreateUtil {
         createBody(sheet, defaultStyle, headers, bodys, bodyHeight, isShowIndex);
 
         return workbook;
+    }
+
+    /**
+     * 根据数据创建excel工作簿，行高默认20和18
+     * @param excelType excel类型，2003版或2007版
+     * @param headers excel表头数据，SheetCell：一个单元格数据，SheetCell[]：一行数据，List<SheetCell[]>：多行表头数据
+     * @param bodys excel内容数据，SheetCell：一个单元格数据，List<SheetCell>：一行数据，List<List<SheetCell>>：多行内容数据
+     * @param sheetName excel中sheet的名称
+     * @param isShowIndex 是否在第一列显示序号
+     * @return 新创建的Excel工作簿
+     * @throws Exception
+     */
+    public static Workbook createSheet(ExcelType excelType, List<SheetCell[]> headers, List<List<SheetCell>> bodys, String sheetName, boolean isShowIndex) throws Exception{
+        return createSheet(excelType, headers, bodys, sheetName, defaultHeadHeigth, defaultBodyHeigth, isShowIndex);
     }
 
     /**
