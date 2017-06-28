@@ -1,0 +1,1 @@
+docker rmi dsl/jenkins:0.1

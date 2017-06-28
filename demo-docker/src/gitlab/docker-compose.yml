@@ -1,0 +1,64 @@
+postgresql:
+  restart: always
+  image: registry.cn-hangzhou.aliyuncs.com/acs-sample/postgresql-sameersbn
+  environment:
+    - DB_USER=gitlab
+    - DB_PASS=123456
+    - DB_NAME=gitlabhq_production
+    - DB_EXTENSION=pg_trgm
+  volumes:
+    - /data/gitlab/postgresql/docker-volume:/var/lib/postgresql
+
+redis:
+  restart: always
+  image: registry.cn-hangzhou.aliyuncs.com/acs-sample/redis-sameersbn
+  volumes:
+    - /data/gitlab/redis/docker-volume:/var/lib/redis
+
+gitlab:
+  restart: always
+  image: registry.cn-hangzhou.aliyuncs.com/acs-sample/gitlab-sameersbn
+  links:
+    - redis:redisio
+    - postgresql:postgresql
+  ports:
+    - "1000:80"
+    - "1001:22"
+  environment:
+    - DEBUG=false
+    - TZ=Asia/Beijing
+    - GITLAB_TIMEZONE=Beijing
+
+    - GITLAB_SECRETS_DB_KEY_BASE=long-and-random-alphanumeric-string
+    - GITLAB_SECRETS_SECRET_KEY_BASE=long-and-random-alphanumeric-string
+    - GITLAB_SECRETS_OTP_KEY_BASE=long-and-random-alphanumeric-string
+
+    - GITLAB_ROOT_PASSWORD=123456789
+    - GITLAB_ROOT_EMAIL=dslzc@foxmail.com
+    - GITLAB_HOST=172.31.1.61
+    - GITLAB_PORT=1000
+    - GITLAB_SSH_PORT=1001
+    - GITLAB_RELATIVE_URL_ROOT=
+
+    - GITLAB_NOTIFY_ON_BROKEN_BUILDS=true
+    - GITLAB_NOTIFY_PUSHER=false
+
+    - GITLAB_EMAIL=dslzc@foxmail.com
+    - GITLAB_EMAIL_REPLY_TO=798171101@qq.com
+
+    - GITLAB_BACKUP_SCHEDULE=daily
+    - GITLAB_BACKUP_EXPIRY=7776000
+    - GITLAB_BACKUP_TIME=05:00
+
+    - NGINX_MAX_UPLOAD_SIZE=60m
+
+    - SMTP_ENABLED=true
+    - SMTP_DOMAIN=mail.51ishare.com
+    - SMTP_HOST=mail.51ishare.com
+    - SMTP_PORT=25
+    - SMTP_USER=gitlab@51ishare.com
+    - SMTP_PASS=12345678
+
+  volumes:
+    - /data/gitlab/docker-volume:/home/git/data
+    - /data/gitlab/log:/var/log/gitlab

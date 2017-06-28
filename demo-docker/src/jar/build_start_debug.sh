@@ -25,12 +25,12 @@ docker rmi ${app_images_name}
 docker build -t ${app_images_name} .
 
 #start
-docker run -d -m 1500m --name ${app_container_name} \
+docker run -dt -m 1500m --name ${app_container_name} \
  -v ${app_logs_dir}/:/logs/:rw \
  -v ${app_upload_dir}/:/upload/:rw \
  -e "SPRING_PROFILES_ACTIVE=${profile_name}" \
  -p ${server_port}:${server_port} \
- -t ${app_images_name}
+ ${app_images_name}
 
 docker ps
 docker logs --tail 0 -f ${app_container_name}

@@ -1,0 +1,1 @@
+docker build -t dsl/jenkins:0.1 .
