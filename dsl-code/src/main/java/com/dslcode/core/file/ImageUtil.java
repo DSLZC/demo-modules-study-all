@@ -1,5 +1,6 @@
-package com.dslcode.core.util;
+package com.dslcode.core.file;
 
+import com.dslcode.core.util.NullUtil;
 import com.dslcode.web.request.create.JavaURIRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -149,19 +150,48 @@ public class ImageUtil {
 		if(null == is) is = JavaURIRequest.invoke("get", url, params);
 		return is;
 	}
-	
-//	public static void main(String[] args) {
-//		/**
-//		 * 测试生成的二维码
-//		 */
-//		try {
-//			InputStream is = QRCode("http://www.gamiwork.com/incentive", "http://www.gamiwork.com/img/logo.png");
-//			if(null != is) {
-//				FileUtil.copy(is, "C:\\Users\\DSL\\Desktop\\serverFile\\000.png", 3);
-//				is.close();
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+
+
+	/**
+	 * 判断图片尺寸，宽高
+	 * @param inputStream
+	 * @param width
+	 * @param height
+	 * @return
+	 */
+	public static boolean imageWidthAndHeight(InputStream inputStream, int width, int height) throws Exception {
+		BufferedImage image = ImageIO.read(inputStream);
+		if(NullUtil.isNull(image)) throw new NullPointerException("图片为空...");
+		if(image.getWidth() != width) throw new Exception("图片宽度不正确...");
+		if(image.getHeight() != height) throw new Exception("图片高度不正确...");
+		return true;
+	}
+
+    /**
+     * 判断图片尺寸，宽高
+     * @param inputStream
+     * @param size 图片大小
+     * @param imageCompares
+     * @return
+     * @throws Exception
+     */
+	public static void imageWidthAndHeightBund(InputStream inputStream, long size, ImageCompare... imageCompares) throws Exception {
+		BufferedImage image = ImageIO.read(inputStream);
+		if(NullUtil.isNull(image)) throw new NullPointerException("图片为空...");
+		for (ImageCompare imageCompare : imageCompares) {
+		    switch (imageCompare.getType()){
+                case width:
+                    imageCompare.setValue(image.getWidth());
+                    break;
+                case height:
+                    imageCompare.setValue(image.getHeight());
+                    break;
+                case size:
+                    imageCompare.setValue(size);
+                    break;
+            }
+		    imageCompare.executeCompare();
+        }
+	}
+
 }

@@ -1,4 +1,4 @@
-package com.dslcode.core.util;
+package com.dslcode.core.enum_;
 
 import org.apache.commons.beanutils.PropertyUtils;
 

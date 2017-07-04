@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Step 1. Launch a postgresql container
-docker run --name gitlab-postgresql -d -m 200m \
+docker run --name gitlab-postgresql -d -m 200m --restart=always \
     -e 'DB_NAME=gitlabhq_production' \
     -e 'DB_EXTENSION=pg_trgm' \
     -e 'DB_USER=gitlab' -e 'DB_PASS=123456' \
@@ -9,12 +9,12 @@ docker run --name gitlab-postgresql -d -m 200m \
     registry.cn-hangzhou.aliyuncs.com/acs-sample/postgresql-sameersbn
 
 # Step 2. Launch a redis container
-docker run --name gitlab-redis -d -m 50m \
+docker run --name gitlab-redis -d -m 50m --restart=always \
     -v /data/gitlab/redis/docker-volume:/var/lib/redis \
     registry.cn-hangzhou.aliyuncs.com/acs-sample/redis-sameersbn
 
 # Step 3. Launch the gitlab container
-docker run --name gitlab -d -m 2048m \
+docker run --name gitlab -d -m 2048m --restart=always \
     --link gitlab-postgresql:postgresql \
     --link gitlab-redis:redisio \
     -p 1001:22 \

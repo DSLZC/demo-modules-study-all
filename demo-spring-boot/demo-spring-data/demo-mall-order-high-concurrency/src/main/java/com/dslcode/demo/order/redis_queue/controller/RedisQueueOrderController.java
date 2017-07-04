@@ -22,7 +22,7 @@ public class RedisQueueOrderController {
 
     @GetMapping("hi")
     public WebResponse hi(){
-        return WebResponse.buildSuccessMsg("hello world");
+        return WebResponse.buildSuccess("hello world");
     }
 
     @PostMapping("add")
@@ -35,7 +35,7 @@ public class RedisQueueOrderController {
             return WebResponse.buildSuccessData(code);
         } catch (Exception e) {
             log.error("", e);
-            return WebResponse.buildErrorMsg(e.getMessage());
+            return WebResponse.buildError(e.getMessage());
         }
     }
 

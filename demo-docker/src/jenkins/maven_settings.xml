@@ -130,6 +130,11 @@ under the License.
       <passphrase>optional; leave empty if not used.</passphrase>
     </server>
     -->
+    <server>
+      <id>local</id>
+      <username>admin</username>
+      <password>admin123</password>
+    </server>
   </servers>
 
   <!-- mirrors
@@ -160,6 +165,12 @@ under the License.
       <id>local</id>
       <mirrorOf>*</mirrorOf>
       <name>local Mirror.</name>
+      <url>http://172.31.1.61:1004/content/groups/public/</url>
+    </mirror>
+    <mirror>
+      <id>local80</id>
+      <mirrorOf>*</mirrorOf>
+      <name>local80 Mirror.</name>
       <url>http://172.31.1.20:8081/content/groups/public/</url>
     </mirror>
     <mirror>

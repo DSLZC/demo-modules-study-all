@@ -6,9 +6,7 @@ import com.dslcode.core.string.StringUtil;
 import com.dslcode.core.util.NullUtil;
 import org.apache.commons.io.FileExistsException;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
 import java.io.*;
 
 /**
@@ -165,19 +163,5 @@ public final class FileUtil {
 		if(null != os) os.close();
 	}
 
-	/**
-	 * 判断图片尺寸，宽高
-	 * @param inputStream
-	 * @param width
-	 * @param height
-	 * @return
-	 */
-	public static boolean imageWidthAndHeight(InputStream inputStream, int width, int height) throws Exception {
-		BufferedImage image = ImageIO.read(inputStream);
-		if(NullUtil.isNull(image)) throw new NullPointerException("图片为空...");
-		if(image.getWidth() != width) throw new Exception("图片宽度不正确...");
-		if(image.getHeight() != height) throw new Exception("图片高度不正确...");
-		return true;
-	}
 
 }

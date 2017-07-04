@@ -23,7 +23,7 @@ public class TraditionalOrderController {
 
     @GetMapping("hi")
     public WebResponse hi(){
-        return WebResponse.buildSuccessMsg("hello world");
+        return WebResponse.buildSuccess("hello world");
     }
 
     @PostMapping("add")
@@ -34,7 +34,7 @@ public class TraditionalOrderController {
             return WebResponse.buildSuccessData(orderItem.getCode());
         } catch (Exception e) {
             log.error("", e);
-            return WebResponse.buildErrorMsg(e.getMessage());
+            return WebResponse.buildError(e.getMessage());
         }
     }
 
