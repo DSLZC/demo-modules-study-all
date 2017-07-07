@@ -15,6 +15,7 @@ public class DateUtil {
     public static final String MMddHHmmssSSS = "MMddHHmmssSSS";
     public static final String yyyyMMddHHmmss0 = "yyyyMMddHHmmss";
     public static final String yyyyMMdd0 = "yyyyMMdd";
+    public static final String yyyyMM = "yyyyMM";
     public static final String yyyyMMddHHmmss = "yyyy-MM-dd HH:mm:ss";
     public static final String yyyyMMddHHmm = "yyyy-MM-dd HH:mm";
     public static final String yyyyMMdd = "yyyy-MM-dd";

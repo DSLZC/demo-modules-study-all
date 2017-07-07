@@ -1,5 +1,5 @@
 #!/bin/bash
 
-test_ip=172.31.1.80
+ip=172.31.1.70
 mvn clean package -Dmaven.test.skip=true
-scp target/*.jar root@$test_ip:/data/workspace/dsl-file-server/app.jar
+scp target/*.jar root@$ip:/data/workspace/file_server/app.jar
