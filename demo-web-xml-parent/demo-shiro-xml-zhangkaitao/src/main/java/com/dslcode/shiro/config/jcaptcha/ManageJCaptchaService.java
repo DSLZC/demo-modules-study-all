@@ -6,6 +6,7 @@
 package com.dslcode.shiro.config.jcaptcha;
 
 import com.octo.captcha.engine.CaptchaEngine;
+import com.octo.captcha.service.CaptchaServiceException;
 import com.octo.captcha.service.captchastore.CaptchaStore;
 import com.octo.captcha.service.captchastore.FastHashMapCaptchaStore;
 import com.octo.captcha.service.image.DefaultManageableImageCaptchaService;
@@ -53,10 +54,10 @@ public class ManageJCaptchaService extends DefaultManageableImageCaptchaService 
      * @param request
      * @throws Exception
      */
-    public static void validate(HttpServletRequest request) throws Exception {
+    public static void validate(HttpServletRequest request) throws CaptchaServiceException {
         if (!jcaptchaEnabled) return;
         Boolean success = captchaService.validateResponseForID(request.getRequestedSessionId(), request.getParameter(jcaptchaParamName));
-        if (null == success || Boolean.FALSE.equals(success)) throw new Exception();
+        if (null == success || Boolean.FALSE.equals(success)) throw new CaptchaServiceException();
     }
 
 }

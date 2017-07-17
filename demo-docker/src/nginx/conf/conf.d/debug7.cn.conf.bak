@@ -1,0 +1,11 @@
+server {
+  listen 80;
+  server_name www.debug7.cn;
+  charset utf-8;
+  access_log  /var/log/nginx/debug7.access.log  main;
+
+  location / {
+    root /data1/www;
+    index index.html;
+  }
+}

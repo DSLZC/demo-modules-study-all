@@ -1,0 +1,12 @@
+server {
+  listen 80;
+  server_name www.51ishare.com 51ishare.com;
+  charset utf-8;
+  access_log  /var/log/nginx/51ishare.access.log  main;
+
+  location / {
+    root /data1/www;
+    index index.html;
+  }
+
+}

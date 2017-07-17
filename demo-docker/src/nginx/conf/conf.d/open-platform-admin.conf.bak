@@ -1,0 +1,15 @@
+server {
+  listen 80;
+  server_name admin.51ishare.com;
+  charset utf-8;
+
+  #access_log  /var/log/nginx/admin.access.log  main;
+
+  location / {
+    proxy_pass http://localhost:7990;
+    proxy_set_header            Host $host;
+    proxy_set_header            X-real-ip $remote_addr;
+    proxy_set_header            X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+}
+
