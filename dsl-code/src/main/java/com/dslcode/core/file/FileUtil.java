@@ -1,13 +1,16 @@
 package com.dslcode.core.file;
 
 import com.dslcode.core.date.DateUtil;
+import com.dslcode.core.io.StreamUtil;
 import com.dslcode.core.random.RandomCode;
 import com.dslcode.core.string.StringUtil;
-import com.dslcode.core.util.NullUtil;
 import org.apache.commons.io.FileExistsException;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.file.StandardOpenOption;
 
 /**
  * 文件操作Util
@@ -24,25 +27,25 @@ public final class FileUtil {
 	/**
 	 * 获取文件后缀名
 	 * @param file
-	 * @param dian 后缀是否包含.  如：true —— .text .doc .xml；false —— text doc xml
+	 * @param isContainsDian 后缀是否包含.  如：true —— .text .doc .xml；false —— text doc xml
 	 * @return
 	 * @throws Exception 
 	 */
-	public static String suffix(File file, boolean dian) throws Exception{
-		return suffix(file.getName(), dian);
+	public static String suffix(File file, boolean isContainsDian) throws Exception{
+		return suffix(file.getName(), isContainsDian);
 	}
 	
 	/**
 	 * 获取文件后缀名
 	 * @param pathOrName 文件路径或文件名
-	 * @param dian 后缀是否包含.  如：true —— .text .doc .xml；false —— text doc xml
+	 * @param isContainsDian 后缀是否包含.  如：true —— .text .doc .xml；false —— text doc xml
 	 * @return
 	 */
-	public static String suffix(String pathOrName, boolean dian) throws Exception{
-		if(NullUtil.isNull(pathOrName)) throw new NullPointerException("文件路径或文件名为空...");
+	public static String suffix(String pathOrName, boolean isContainsDian) throws Exception{
+		if(StringUtil.isNull(pathOrName)) throw new NullPointerException("文件路径或文件名为空...");
 		int index = pathOrName.lastIndexOf(".");
 		if(index < 0) throw new Exception("文件路径或文件名错误...");
-		return pathOrName.substring(dian ? pathOrName.lastIndexOf(".") : pathOrName.lastIndexOf(".")+1, pathOrName.length());
+		return pathOrName.substring(isContainsDian ? pathOrName.lastIndexOf(".") : pathOrName.lastIndexOf(".")+1, pathOrName.length());
 	}
 
 	/**
@@ -57,26 +60,26 @@ public final class FileUtil {
 	/**
 	 * 根据文件路径获取该文件
 	 * @param sourcePath 文件绝对路径
-	 * @param exist 文件存在与否  0必须不存在  1必须存在    其他值不关心
+	 * @param option 文件操作模式
 	 * @return
 	 * @throws FileNotFoundException
 	 */
-	public static File getFile(String sourcePath, int exist) throws Exception{
+	public static File getFile(String sourcePath, StandardOpenOption option) throws Exception{
 		File sourceFile = new File(sourcePath);
-		if(exist == 1 && !sourceFile.exists()) throw new FileNotFoundException("文件不存在...");
-		if(exist == 0 && sourceFile.exists()) throw new FileExistsException("文件已经存在...");
+		if(option == StandardOpenOption.READ && !sourceFile.exists()) throw new FileNotFoundException("文件不存在...");
+		if(option == StandardOpenOption.CREATE_NEW && sourceFile.exists()) throw new FileExistsException("文件已经存在...");
 		return sourceFile;
 	}
 	/**
 	 * 复制文件
 	 * @param sourcePath 源文件绝对路径
 	 * @param targetPath 目标文件绝对路径
-	 * @param exist 目标文件存在与否  0必须不存在  1必须存在    其他值不关心
+	 * @param option 目标文件模式
 	 * @throws Exception
 	 */
-	public static void copy(String sourcePath, String targetPath, int exist) throws Exception{
-		InputStream is = new FileInputStream(getFile(sourcePath, 1));
-		copy(is, targetPath, exist);
+	public static void copy(String sourcePath, String targetPath, StandardOpenOption option) throws Exception{
+		InputStream is = new FileInputStream(getFile(sourcePath, option));
+		copy(is, targetPath, option);
 		if(null != is) is.close();
 	}
 	
@@ -84,11 +87,11 @@ public final class FileUtil {
 	 * 复制文件
 	 * @param is 源文件输入流
 	 * @param targetPath 目标文件绝对路径
-	 * @param exist 目标文件存在与否  0必须不存在  1必须存在    其他值不关心
+	 * @param option 目标文件模式
 	 * @throws Exception
 	 */
-	public static void copy(InputStream is, String targetPath, int exist) throws Exception{
-		OutputStream os = new FileOutputStream(getFile(targetPath, exist));
+	public static void copy(InputStream is, String targetPath, StandardOpenOption option) throws Exception{
+		OutputStream os = new FileOutputStream(getFile(targetPath, option));
 		copy(is, os);
 		if(null != os) os.close();
 	}
@@ -100,12 +103,33 @@ public final class FileUtil {
 	 * @throws Exception
 	 */
 	public static void copy(InputStream is, OutputStream os) throws Exception{
-		byte[] buffer = new byte[BUFFER_SIZE];
-		int bytesRead = -1;
-		while ((bytesRead = is.read(buffer)) != -1) {
-			os.write(buffer, 0, bytesRead);
+		// NIO 方式
+		if (is instanceof FileInputStream && os instanceof FileOutputStream){
+			FileChannel inChannel = null;
+			FileChannel outChannel = null;
+			try {
+				// 获取通道
+				inChannel = ((FileInputStream)is).getChannel();
+				outChannel = ((FileOutputStream)os).getChannel();
+				// 分配指定大小的缓冲区
+				ByteBuffer byteBuffer = ByteBuffer.allocate(BUFFER_SIZE);
+				// 将通道中的数据存入缓冲区中
+				while(inChannel.read(byteBuffer) != -1){
+					byteBuffer.flip();	// 切换读取数据的模式
+					outChannel.write(byteBuffer);	// 将缓冲区中的数据写入通道中
+					byteBuffer.clear();	//清空缓冲区
+				}
+			} finally {
+				StreamUtil.close(inChannel, outChannel);
+			}
+		} else {
+			// 传统流方式
+			byte[] buffer = new byte[BUFFER_SIZE];
+			int bytesRead;
+			while ((bytesRead = is.read(buffer)) != -1) os.write(buffer, 0, bytesRead);
+			os.flush();
 		}
-		os.flush();
+
 	}
 	
 	/**
@@ -115,7 +139,7 @@ public final class FileUtil {
 	 * @throws Exception
 	 */
 	public static void rename(String sourcePath, String newName) throws Exception{
-		rename(getFile(sourcePath, 1), newName);
+		rename(getFile(sourcePath, StandardOpenOption.READ), newName);
 	}
 	
 	/**
@@ -125,11 +149,11 @@ public final class FileUtil {
 	 * @throws Exception
 	 */
 	public static boolean rename(File sourceFile, String newName) throws Exception{
-		if(NullUtil.isNull(newName)) throw new NullPointerException("新文件名为空...");
+		if(StringUtil.isNull(newName)) throw new NullPointerException("新文件名为空...");
 		if(!sourceFile.exists()) throw new FileNotFoundException("源文件不存在...");
 		StringBuffer targetPath = new StringBuffer();
 		targetPath.append(sourceFile.getParent()).append(PATH_SEPARATOR).append(newName).append(suffix(sourceFile.getName(), true));
-		File targetFile = getFile(targetPath.toString(), 0);
+		File targetFile = getFile(targetPath.toString(), StandardOpenOption.CREATE_NEW);
 		return sourceFile.renameTo(targetFile);
 	}
 	
@@ -142,9 +166,9 @@ public final class FileUtil {
 	 * @throws Exception
 	 */
 	public static void download(String sourcePath, String fileName, String fileType, HttpServletResponse response) throws Exception{
-		InputStream is = new FileInputStream(getFile(sourcePath, 1));
+		InputStream is = new FileInputStream(getFile(sourcePath, StandardOpenOption.READ));
 		download(is, fileName, fileType, response);
-		if(null != is) is.close();
+		StreamUtil.close(is);
 	}
 	
 	/**
@@ -160,8 +184,7 @@ public final class FileUtil {
 		response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("UTF-8"), "ISO-8859-1"));
 		OutputStream os = response.getOutputStream();
 		copy(is, os);
-		if(null != os) os.close();
+		StreamUtil.close(os);
 	}
-
 
 }

@@ -12,6 +12,44 @@ import java.util.Collection;
 public class StringUtil {
 
 	/**
+	 * 判断是否为空或empty
+	 * @param s
+	 * @return
+	 */
+	public static boolean isNull(String s) {
+		return null == s || s.length() == 0;
+	}
+
+	/**
+	 * 判断是否全部为空或empty
+	 * @param ss
+	 * @return
+	 */
+	public static boolean isNullAll(String... ss){
+		for(String s : ss) if(!isNull(s)) return false;
+		return true;
+	}
+
+	/**
+	 * 判断是否不为空或empty
+	 * @param s
+	 * @return
+	 */
+	public static boolean isNotNull(String s) {
+		return !isNull(s);
+	}
+
+	/**
+	 * 判断是否全部不为空或empty
+	 * @param ss
+	 * @return
+	 */
+	public static boolean isNotNullAll(String... ss){
+		for(String s : ss) if(isNull(s)) return false;
+		return true;
+	}
+
+	/**
 	 * 将第一个字母转为大写
 	 * @param str
 	 * @return

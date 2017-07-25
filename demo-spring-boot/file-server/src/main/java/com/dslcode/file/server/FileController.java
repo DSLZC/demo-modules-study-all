@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.nio.file.StandardOpenOption;
 
 /**
  * Created by dongsilin on 2017/2/23.
@@ -77,7 +78,7 @@ public class FileController {
         try {
             String fileNewName = FileUtil.getRandomFileName(filedata.getOriginalFilename());
             String fileNewPath = StringUtil.append2String(uploadPath, fileNewName);
-            FileUtil.copy(filedata.getInputStream(), fileNewPath, 2);
+            FileUtil.copy(filedata.getInputStream(), fileNewPath, StandardOpenOption.CREATE_NEW);
 
             return StringUtil.append2String("/", appName, "/", moduleName, "/", typeName, "/", yearMonth, "/", fileNewName);// /taobao/goods/image/201705/15464154131310kj.jpg
         } catch (Exception e) {
