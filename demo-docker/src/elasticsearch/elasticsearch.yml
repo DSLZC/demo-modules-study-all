@@ -1,0 +1,5 @@
+http.host: 0.0.0.0
+cluster.name: elastic_cluster
+node.name: elastic_node_1
+# 0.0.0.0 为任意都可连接
+network.host: 0.0.0.0

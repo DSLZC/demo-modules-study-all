@@ -1,9 +1,9 @@
 server {
-  listen 80;
-  server_name channel.51ishare.com;
+  listen 9300;
+  server_name 172.31.1.70;
   charset utf-8;
 
   location / {
-    proxy_pass http://localhost:8002;
+    proxy_pass http://172.17.0.3:9300;
   }
 }
