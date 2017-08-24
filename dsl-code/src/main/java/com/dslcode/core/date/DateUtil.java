@@ -97,4 +97,26 @@ public class DateUtil {
     public static String parse(Date date, String format) {
         return mils2TimeStr(date.getTime(), format);
     }
+
+    /**
+     * 人性化DateFormat
+     * 30分钟以内--刚刚；30分钟至1个小时--30分钟；1个小时到2个小时--1小时；2个小时以上且是今天--今天；其余--日期。
+     * @param date
+     * @return
+     */
+    public static String parseDateToHumanize(Date date) {
+        if (null == date) return "";
+
+        long dateSec = date.getTime() / 1000;
+        long nowSec = System.currentTimeMillis() / 1000;
+        // 判断是否是今天
+        if (dateSec/ 86400 == nowSec / 86400){
+            long n = dateSec % 86400;
+            if (n <= 10800) return "刚刚";
+            else if (n <= 21600) return "30分钟";
+            else if (n <= 43200) return "1小时";
+            else return "今天";
+        }
+        return DateUtil.parse(date, DateUtil.yyyyMMdd);
+    }
 }

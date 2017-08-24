@@ -128,4 +128,26 @@ public class StringUtil {
 		return append(null, objects);
 	}
 
+	/**
+	 * 将用户名除第一个中文字符的其他字符替换为*
+	 * @param origin
+	 * @return
+	 */
+	public static String replaceUserName(String origin) {
+		if(isNull(origin)) return "";
+		return origin.replaceAll("([\\u4e00-\\u9fa5_a-zA-Z0-9]{1})[\\u4e00-\\u9fa5_a-zA-Z0-9]*", "$1**");
+	}
+
+	/**
+	 * 将手机号码的中间四位替换为*
+	 * 13112324567 -->131****4567
+	 * @param origin
+	 * @return
+	 */
+	public static String replacePhone(String origin) {
+		if(isNull(origin)) return "";
+		if (origin.length() < 11) return origin;
+		return origin.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+	}
+
 }
